@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "jsonConverter": {
+      "commandName": "Project",
+      "commandLineArgs": ".\\export_xyz „C:\\Users\\Jan\\Desktop\\csvData.csv” json\r\n"
+    }
+  }
+}
