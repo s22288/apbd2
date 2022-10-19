@@ -8,7 +8,13 @@ HashSet<Student> students = new HashSet<Student>();
 HashSet<Studies> studieCurses = new HashSet<Studies>();
 string adres = args[0];
 string path = args[1];
-if (!File.Exists(path))
+
+if (System.IO.Directory.Exists(path))
+{
+    throw new ArgumentException("podana ścieżka jest nie poprawna");
+
+}
+if (!File.Exists(adres))
 {
     throw new FileNotFoundException("Plik nazwa nie istnieje");
 }
@@ -27,23 +33,23 @@ while ((line = reader.ReadLine()) != null)
        
 
         List<string> studentsData = line.Split(",").ToList<string>();
-        Console.WriteLine(studentsData.Count());
-        if (studentsData.Count() != 9 )
+      
+        if (studentsData.Count() != 9)
         {
-            Console.WriteLine("błąd");
+            
 
             using (StreamWriter sw = File.AppendText(@"C:\\Users\\micha\\OneDrive\\Pulpit\\apbdpjatk\\apbd2\\jsonConverter\\jsonConverter\\log.txt"))
             {
-                sw.WriteLine("ilość kolumn sie nie zgada log: " +line);
+                sw.WriteLine("ilość kolumn sie nie zgada log: " + line);
                 sw.Close();
             }
 
 
         }
 
-        if (checkifColumnisEmpty(studentsData))
+        else if (checkifColumnisEmpty(studentsData))
         {
-            Console.WriteLine("błąd");
+
 
             using (StreamWriter sw = File.AppendText(@"C:\\Users\\micha\\OneDrive\\Pulpit\\apbdpjatk\\apbd2\\jsonConverter\\jsonConverter\\log.txt"))
             {
@@ -53,23 +59,25 @@ while ((line = reader.ReadLine()) != null)
 
 
         }
+        else
+        {
 
 
-        student.fname = studentsData[0];
-        student.Iname = studentsData[1];
-        s.name = studentsData[2];
-        s.mode = studentsData[3];
-        student.indexNumber = studentsData[4];
-        student.birthdate = DateTime.Parse(studentsData[5]);
-        student.email = studentsData[6];
-        student.fathersName = studentsData[7];
-        student.mothersName = studentsData[8];
-        student.studies = s;
+            student.fname = studentsData[0];
+            student.Iname = studentsData[1];
+            s.name = studentsData[2];
+            s.mode = studentsData[3];
+            student.indexNumber = studentsData[4];
+            student.birthdate = DateTime.Parse(studentsData[5]);
+            student.email = studentsData[6];
+            student.fathersName = studentsData[7];
+            student.mothersName = studentsData[8];
+            student.studies = s;
 
-        students.Add(student);
-        studieCurses.Add(s);
+            students.Add(student);
+            studieCurses.Add(s);
 
-
+        }
 
     }
 }
@@ -80,7 +88,7 @@ List<Studies> coursesList = studieCurses.ToList();
 //listaStudentow.ForEach(e => e.tostring());
 Uczelnia uczelnia = new Uczelnia
 {
-    studenci = listaStudentow,
+    studenci = null,
     kierunki = coursesList,
 };
 
